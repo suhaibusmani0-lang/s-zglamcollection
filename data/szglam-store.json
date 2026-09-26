@@ -1,0 +1,220 @@
+{
+  "version": 1,
+  "lastUpdated": "2026-09-26T18:43:50.268Z",
+  "show": {
+    "id": "show-live-current",
+    "title": "Friday Luxury Kundan & Bridal Drop #42",
+    "status": "PAYMENT_WINDOW",
+    "tiktokLiveUrl": "https://www.tiktok.com/@snzglam/live",
+    "timerEndTime": "2026-09-26T19:08:39.645Z",
+    "timerDurationMinutes": 30,
+    "featuredPrize": {
+      "title": "24K Gold Plated Royal Kundan & Basra Pearl Bridal Choker Set",
+      "retailValue": 245,
+      "imageUrl": "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?q=80&w=1200&auto=format&fit=crop",
+      "description": "Exquisite handcrafted bridal choker necklace adorned with uncut polki kundan stones, green tourmaline drop beads, and matching chandelier jhumkas + maang tikka. Hypoallergenic & nickel-free."
+    },
+    "startedAt": "2026-09-26T18:05:39.645Z",
+    "endedAt": null,
+    "winner": null
+  },
+  "entries": [
+    {
+      "showId": "show-live-current",
+      "tiktokHandle": "@sana_live",
+      "fullName": "Sana Enterprise Test",
+      "phone": "(929) 600-1937",
+      "email": "",
+      "amountPaid": 185,
+      "paymentMethod": "ZELLE",
+      "transactionReference": "",
+      "receiptUrl": "",
+      "shippingAddress": {
+        "street": "500 Madison Ave",
+        "aptSuite": "",
+        "city": "New York",
+        "state": "NY",
+        "zip": "10022"
+      },
+      "notes": "",
+      "id": "entry-1790448230268-5265",
+      "ticketNumber": "SZ-5265",
+      "status": "APPROVED",
+      "isEligibleForGiveaway": true,
+      "isWinner": false,
+      "createdAt": "2026-09-26T18:43:50.268Z"
+    },
+    {
+      "id": "entry-1",
+      "ticketNumber": "SZ-9041",
+      "showId": "show-live-current",
+      "tiktokHandle": "@priya_nyc",
+      "fullName": "Priya Patel",
+      "phone": "(201) 555-0193",
+      "email": "priya.patel@gmail.com",
+      "amountPaid": 120,
+      "paymentMethod": "ZELLE",
+      "transactionReference": "Zelle Ref #89301294",
+      "receiptUrl": "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?q=80&w=800&auto=format&fit=crop",
+      "shippingAddress": {
+        "street": "142 Forest Ave",
+        "aptSuite": "Apt 4B",
+        "city": "Jersey City",
+        "state": "NJ",
+        "zip": "07302"
+      },
+      "status": "APPROVED",
+      "isEligibleForGiveaway": true,
+      "isWinner": false,
+      "createdAt": "2026-09-26T18:26:39.645Z"
+    },
+    {
+      "id": "entry-2",
+      "ticketNumber": "SZ-9042",
+      "showId": "show-live-current",
+      "tiktokHandle": "@amrit_dhillon",
+      "fullName": "Amrit Dhillon",
+      "phone": "(516) 555-8421",
+      "email": "amrit.d@outlook.com",
+      "amountPaid": 85,
+      "paymentMethod": "VENMO",
+      "transactionReference": "Venmo to @snzglam",
+      "receiptUrl": "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?q=80&w=800&auto=format&fit=crop",
+      "shippingAddress": {
+        "street": "782 Hillside Blvd",
+        "city": "New Hyde Park",
+        "state": "NY",
+        "zip": "11040"
+      },
+      "status": "APPROVED",
+      "isEligibleForGiveaway": true,
+      "isWinner": false,
+      "createdAt": "2026-09-26T18:29:39.645Z"
+    },
+    {
+      "id": "entry-3",
+      "ticketNumber": "SZ-9043",
+      "showId": "show-live-current",
+      "tiktokHandle": "@jasleen.brampton",
+      "fullName": "Jasleen Kaur",
+      "phone": "(917) 555-4491",
+      "email": "jasleenk@gmail.com",
+      "amountPaid": 165,
+      "paymentMethod": "ZELLE",
+      "transactionReference": "Chase QuickPay #04921",
+      "receiptUrl": "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?q=80&w=800&auto=format&fit=crop",
+      "shippingAddress": {
+        "street": "350 5th Ave",
+        "aptSuite": "Suite 2200",
+        "city": "New York",
+        "state": "NY",
+        "zip": "10118"
+      },
+      "status": "APPROVED",
+      "isEligibleForGiveaway": true,
+      "isWinner": false,
+      "createdAt": "2026-09-26T18:32:39.645Z"
+    },
+    {
+      "id": "entry-4",
+      "ticketNumber": "SZ-9044",
+      "showId": "show-live-current",
+      "tiktokHandle": "@simran_sandhu_ca",
+      "fullName": "Simran Sandhu",
+      "phone": "(408) 555-7729",
+      "email": "simran.sandhu@yahoo.com",
+      "amountPaid": 95,
+      "paymentMethod": "CASH_APP",
+      "transactionReference": "CashApp $SZGlamLive",
+      "receiptUrl": "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?q=80&w=800&auto=format&fit=crop",
+      "shippingAddress": {
+        "street": "921 Silicon Valley Way",
+        "city": "Fremont",
+        "state": "CA",
+        "zip": "94538"
+      },
+      "status": "APPROVED",
+      "isEligibleForGiveaway": true,
+      "isWinner": false,
+      "createdAt": "2026-09-26T18:36:39.645Z"
+    }
+  ],
+  "winners": [
+    {
+      "id": "win-1",
+      "ticketNumber": "SZ-8921",
+      "tiktokHandle": "@mahwish_subzwari",
+      "fullName": "Mahwish Subzwari",
+      "prizeTitle": "Multicolor Royal Kundan Statement Choker & Earring Set",
+      "prizeValue": 95,
+      "prizeImageUrl": "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?q=80&w=800&auto=format&fit=crop",
+      "date": "Sep 22, 2026",
+      "showTitle": "Fall Wedding Drop Live #41"
+    },
+    {
+      "id": "win-2",
+      "ticketNumber": "SZ-8831",
+      "tiktokHandle": "@harpreet_seattle",
+      "fullName": "Harpreet Gill",
+      "prizeTitle": "Emerald Green Mughal Kundan Choker & Matha Patti Set",
+      "prizeValue": 220,
+      "prizeImageUrl": "https://images.unsplash.com/photo-1611591475870-1798365d9560?q=80&w=800&auto=format&fit=crop",
+      "date": "Sep 19, 2026",
+      "showTitle": "Fall Wedding Drop Live #40"
+    }
+  ],
+  "settings": {
+    "zelle": {
+      "enabled": true,
+      "recipientName": "S&Z Glam Collection LLC",
+      "email": "pay@szglamcollection.com",
+      "phone": "(929) 600-1937",
+      "notes": "Free instant transfer from any US bank app (Chase, BoA, Wells Fargo, Citi, Capital One). Please put your TikTok username in the memo."
+    },
+    "venmo": {
+      "enabled": true,
+      "handle": "@snzglam",
+      "displayName": "S&Z Glam Collection",
+      "link": "https://venmo.com/u/snzglam",
+      "notes": "Please add your TikTok username in the \"What is this for?\" note. Turn OFF goods/services toggle if paying directly."
+    },
+    "cashApp": {
+      "enabled": true,
+      "cashtag": "$SZGlamLive",
+      "link": "https://cash.app/$SZGlamLive",
+      "notes": "Include your TikTok handle in the notes field."
+    },
+    "paypal": {
+      "enabled": true,
+      "paypalMe": "snzglam",
+      "link": "https://paypal.me/snzglam",
+      "notes": "Select \"Friends & Family\" to avoid delays. Mention your TikTok handle."
+    },
+    "tiktok": {
+      "username": "@snzglam",
+      "liveUrl": "https://www.tiktok.com/@snzglam/live"
+    },
+    "supportPhone": "+1 (929) 600-1937",
+    "supportEmail": "orders@szglamcollection.com"
+  },
+  "auditLogs": [
+    {
+      "id": "audit-1790448230268",
+      "action": "ENTRY_CREATED",
+      "details": {
+        "ticketNumber": "SZ-5265",
+        "tiktokHandle": "@sana_live",
+        "amount": 185
+      },
+      "timestamp": "2026-09-26T18:43:50.268Z"
+    },
+    {
+      "id": "audit-1790448039650",
+      "action": "STORE_INITIALIZED",
+      "details": {
+        "message": "Enterprise database initialized"
+      },
+      "timestamp": "2026-09-26T18:40:39.650Z"
+    }
+  ]
+}

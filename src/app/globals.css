@@ -7,15 +7,17 @@
   --gold-dark: #98752c;
   --gold-light: #fbf5e8;
   --gold-border: #e8d9ba;
-  --font-royal: 'Cinzel', serif;
-  --font-editorial: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
-  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-heading: 'Raleway', sans-serif;
+  --font-body: 'Lato', sans-serif;
+  --font-royal: 'Raleway', sans-serif;
+  --font-editorial: 'Raleway', sans-serif;
+  --font-sans: 'Lato', sans-serif;
 }
 
 body {
   background-color: var(--background);
   color: var(--foreground);
-  font-family: var(--font-sans);
+  font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-image: 
@@ -25,14 +27,14 @@ body {
   background-position: 0 0, 20px 20px;
 }
 
-/* Luxury Editorial Headings */
-.font-royal {
-  font-family: 'Cinzel', serif;
-  letter-spacing: 0.08em;
+/* Headings font: Raleway */
+h1, h2, h3, h4, h5, h6, .font-heading, .font-royal, .font-serif {
+  font-family: var(--font-heading);
+  letter-spacing: -0.01em;
 }
 
 .font-editorial {
-  font-family: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+  font-family: var(--font-heading);
 }
 
 /* Gold Metallic Text Gradient */

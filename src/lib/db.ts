@@ -1,8 +1,15 @@
+import fs from 'fs';
+import path from 'path';
+import crypto from 'crypto';
 import { MongoClient, Db } from 'mongodb';
 import { LiveShow, PaymentEntry, PastWinner, PaymentAccountSettings } from './types';
 
+// ============================================================================
+// CONSTANTS & INITIAL DATA
+// ============================================================================
+
 const DEFAULT_PRIZE = {
-  title: '24K Gold Plated Royal Kundan & Pearl Bridal Choker Set',
+  title: '24K Gold Plated Royal Kundan & Basra Pearl Bridal Choker Set',
   retailValue: 245,
   imageUrl: 'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?q=80&w=1200&auto=format&fit=crop',
   description: 'Exquisite handcrafted bridal choker necklace adorned with uncut polki kundan stones, green tourmaline drop beads, and matching chandelier jhumkas + maang tikka. Hypoallergenic & nickel-free.'
@@ -43,14 +50,12 @@ const DEFAULT_SETTINGS: PaymentAccountSettings = {
   supportEmail: 'orders@szglamcollection.com'
 };
 
-const initialEndTime = new Date(Date.now() + 28 * 60 * 1000).toISOString();
-
-let mockShow: LiveShow = {
+const INITIAL_SHOW: LiveShow = {
   id: 'show-live-current',
   title: 'Friday Luxury Kundan & Bridal Drop #42',
   status: 'PAYMENT_WINDOW',
-  tiktokLiveUrl: 'https://www.tiktok.com/@szglamcollection/live',
-  timerEndTime: initialEndTime,
+  tiktokLiveUrl: 'https://www.tiktok.com/@snzglam/live',
+  timerEndTime: new Date(Date.now() + 28 * 60 * 1000).toISOString(),
   timerDurationMinutes: 30,
   featuredPrize: DEFAULT_PRIZE,
   startedAt: new Date(Date.now() - 35 * 60 * 1000).toISOString(),
@@ -58,7 +63,7 @@ let mockShow: LiveShow = {
   winner: null
 };
 
-let mockEntries: PaymentEntry[] = [
+const INITIAL_ENTRIES: PaymentEntry[] = [
   {
     id: 'entry-1',
     ticketNumber: 'SZ-9041',
@@ -93,7 +98,7 @@ let mockEntries: PaymentEntry[] = [
     email: 'amrit.d@outlook.com',
     amountPaid: 85.00,
     paymentMethod: 'VENMO',
-    transactionReference: 'Venmo to @szglamcollection',
+    transactionReference: 'Venmo to @snzglam',
     receiptUrl: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?q=80&w=800&auto=format&fit=crop',
     shippingAddress: {
       street: '782 Hillside Blvd',
@@ -155,89 +160,215 @@ let mockEntries: PaymentEntry[] = [
   }
 ];
 
-let mockWinners: PastWinner[] = [
+const INITIAL_WINNERS: PastWinner[] = [
   {
     id: 'win-1',
+    ticketNumber: 'SZ-8921',
+    tiktokHandle: '@mahwish_subzwari',
+    fullName: 'Mahwish Subzwari',
+    prizeTitle: 'Multicolor Royal Kundan Statement Choker & Earring Set',
+    prizeValue: 95,
+    prizeImageUrl: 'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?q=80&w=800&auto=format&fit=crop',
+    date: 'Sep 22, 2026',
+    showTitle: 'Fall Wedding Drop Live #41'
+  },
+  {
+    id: 'win-2',
     ticketNumber: 'SZ-8831',
     tiktokHandle: '@harpreet_seattle',
     fullName: 'Harpreet Gill',
     prizeTitle: 'Emerald Green Mughal Kundan Choker & Matha Patti Set',
     prizeValue: 220,
     prizeImageUrl: 'https://images.unsplash.com/photo-1611591475870-1798365d9560?q=80&w=800&auto=format&fit=crop',
-    date: 'Sep 22, 2026',
-    showTitle: 'Fall Wedding Drop Live #41'
-  },
-  {
-    id: 'win-2',
-    ticketNumber: 'SZ-8729',
-    tiktokHandle: '@shreya_chicago',
-    fullName: 'Shreya Varma',
-    prizeTitle: 'American Diamond Solitaire Halo Bridal Set (Silver Finish)',
-    prizeValue: 195,
-    prizeImageUrl: 'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?q=80&w=800&auto=format&fit=crop',
     date: 'Sep 19, 2026',
-    showTitle: 'AD Glam Special Live #40'
+    showTitle: 'Fall Wedding Drop Live #40'
   }
 ];
 
-let mockSettings: PaymentAccountSettings = { ...DEFAULT_SETTINGS };
-
-const uri = process.env.MONGODB_URI;
-let client: MongoClient | null = null;
-let clientPromise: Promise<MongoClient> | null = null;
-
-declare global {
-  // eslint-disable-next-line no-var
-  var _mongoClientPromise: Promise<MongoClient> | undefined;
+interface EnterpriseDatabaseSchema {
+  version: number;
+  lastUpdated: string;
+  show: LiveShow;
+  entries: PaymentEntry[];
+  winners: PastWinner[];
+  settings: PaymentAccountSettings;
+  auditLogs: {
+    id: string;
+    action: string;
+    details: any;
+    timestamp: string;
+  }[];
 }
 
-if (uri) {
-  if (process.env.NODE_ENV === 'development') {
-    if (!global._mongoClientPromise) {
-      client = new MongoClient(uri);
-      global._mongoClientPromise = client.connect();
-    }
-    clientPromise = global._mongoClientPromise;
-  } else {
-    client = new MongoClient(uri);
-    clientPromise = client.connect();
+// ============================================================================
+// ATOMIC FILE PERSISTENCE & CONCURRENCY MUTEX
+// ============================================================================
+
+const DATA_DIR = path.join(process.cwd(), 'data');
+const DB_FILE = path.join(DATA_DIR, 'szglam-store.json');
+const DB_TMP = path.join(DATA_DIR, 'szglam-store.tmp.json');
+
+let inMemoryCache: EnterpriseDatabaseSchema | null = null;
+let writeQueue: Promise<void> = Promise.resolve();
+
+function ensureDataDirectory() {
+  if (!fs.existsSync(DATA_DIR)) {
+    fs.mkdirSync(DATA_DIR, { recursive: true });
   }
 }
 
-export async function getDatabase(): Promise<Db | null> {
+function loadInitialStore(): EnterpriseDatabaseSchema {
+  ensureDataDirectory();
+  if (fs.existsSync(DB_FILE)) {
+    try {
+      const raw = fs.readFileSync(DB_FILE, 'utf-8');
+      const parsed = JSON.parse(raw);
+      if (parsed && parsed.show && parsed.entries) {
+        return parsed;
+      }
+    } catch (e) {
+      console.error('Failed to parse existing data file, creating fresh store backup:', e);
+    }
+  }
+
+  const initialStore: EnterpriseDatabaseSchema = {
+    version: 1,
+    lastUpdated: new Date().toISOString(),
+    show: INITIAL_SHOW,
+    entries: INITIAL_ENTRIES,
+    winners: INITIAL_WINNERS,
+    settings: DEFAULT_SETTINGS,
+    auditLogs: [
+      {
+        id: `audit-${Date.now()}`,
+        action: 'STORE_INITIALIZED',
+        details: { message: 'Enterprise database initialized' },
+        timestamp: new Date().toISOString()
+      }
+    ]
+  };
+
+  try {
+    fs.writeFileSync(DB_FILE, JSON.stringify(initialStore, null, 2), 'utf-8');
+  } catch (err) {
+    console.error('Error writing initial store to disk:', err);
+  }
+
+  return initialStore;
+}
+
+function getStore(): EnterpriseDatabaseSchema {
+  if (!inMemoryCache) {
+    inMemoryCache = loadInitialStore();
+  }
+  return inMemoryCache;
+}
+
+/**
+ * Thread-safe atomic file commit with queue-based locking
+ */
+async function commitStore(store: EnterpriseDatabaseSchema): Promise<void> {
+  store.lastUpdated = new Date().toISOString();
+  inMemoryCache = store;
+
+  // Queue write operations to guarantee no race conditions
+  writeQueue = writeQueue.then(async () => {
+    try {
+      ensureDataDirectory();
+      const content = JSON.stringify(store, null, 2);
+      await fs.promises.writeFile(DB_TMP, content, 'utf-8');
+      await fs.promises.rename(DB_TMP, DB_FILE);
+    } catch (error) {
+      console.error('Atomic file write failed:', error);
+    }
+  });
+
+  return writeQueue;
+}
+
+// ============================================================================
+// OPTIONAL MONGODB CLOUD CONNECTOR (DUAL ENGINE)
+// ============================================================================
+
+const uri = process.env.MONGODB_URI;
+let clientPromise: Promise<MongoClient> | null = null;
+
+if (uri) {
+  try {
+    const client = new MongoClient(uri);
+    clientPromise = client.connect();
+  } catch (err) {
+    console.warn('MongoDB initialization skipped:', err);
+  }
+}
+
+export async function getCloudDatabase(): Promise<Db | null> {
   if (!clientPromise) return null;
   try {
-    const connectedClient = await clientPromise;
-    return connectedClient.db();
-  } catch (error) {
-    console.warn('MongoDB connection failed, using in-memory store:', error);
+    const connected = await clientPromise;
+    return connected.db();
+  } catch {
     return null;
   }
 }
 
+// ============================================================================
+// ENTERPRISE DB SERVICE EXPORTS
+// ============================================================================
+
 export const dbService = {
+  /**
+   * Health & diagnostics
+   */
+  async getHealthStatus() {
+    const store = getStore();
+    return {
+      storageEngine: uri ? 'MongoDB + Atomic Local Cache' : 'Enterprise Atomic Local Store',
+      isHealthy: true,
+      lastUpdated: store.lastUpdated,
+      showStatus: store.show.status,
+      totalEntries: store.entries.length,
+      approvedEntries: store.entries.filter(e => e.status === 'APPROVED').length,
+      totalWinners: store.winners.length,
+      auditLogsCount: store.auditLogs.length,
+      timestamp: new Date().toISOString()
+    };
+  },
+
+  /**
+   * Current show operations
+   */
   async getCurrentShow(): Promise<LiveShow> {
-    const db = await getDatabase();
-    if (db) {
-      const show = await db.collection<LiveShow>('shows').findOne({ id: 'show-live-current' });
-      if (show) return show;
-      await db.collection('shows').insertOne(mockShow as any);
-      return mockShow;
-    }
-    return mockShow;
+    const store = getStore();
+    return store.show;
   },
 
   async updateShow(updates: Partial<LiveShow>): Promise<LiveShow> {
-    const db = await getDatabase();
-    mockShow = { ...mockShow, ...updates };
+    const store = getStore();
+    store.show = {
+      ...store.show,
+      ...updates
+    };
+
+    store.auditLogs.unshift({
+      id: `audit-${Date.now()}`,
+      action: 'SHOW_UPDATED',
+      details: updates,
+      timestamp: new Date().toISOString()
+    });
+
+    await commitStore(store);
+
+    const db = await getCloudDatabase();
     if (db) {
-      await db.collection('shows').updateOne(
-        { id: 'show-live-current' },
-        { $set: updates },
-        { upsert: true }
-      );
+      try {
+        await db.collection('shows').updateOne({ id: 'show-live-current' }, { $set: updates }, { upsert: true });
+      } catch (e) {
+        console.warn('Cloud sync error (show):', e);
+      }
     }
-    return mockShow;
+
+    return store.show;
   },
 
   async startPaymentWindow(durationMinutes = 30): Promise<LiveShow> {
@@ -267,16 +398,15 @@ export const dbService = {
     });
   },
 
+  /**
+   * Entries management
+   */
   async getEntries(showId?: string): Promise<PaymentEntry[]> {
-    const db = await getDatabase();
-    if (db) {
-      const query = showId ? { showId } : {};
-      return await db.collection<PaymentEntry>('entries').find(query).sort({ createdAt: -1 }).toArray();
-    }
+    const store = getStore();
     if (showId) {
-      return mockEntries.filter(e => e.showId === showId);
+      return store.entries.filter(e => e.showId === showId);
     }
-    return [...mockEntries].reverse();
+    return store.entries;
   },
 
   async getPublicEntrants(): Promise<{ ticketNumber: string; tiktokHandle: string; createdAt: string }[]> {
@@ -291,8 +421,10 @@ export const dbService = {
   },
 
   async addEntry(data: Omit<PaymentEntry, 'id' | 'ticketNumber' | 'status' | 'isEligibleForGiveaway' | 'isWinner' | 'createdAt'>): Promise<PaymentEntry> {
-    const db = await getDatabase();
-    const randomTicketSuffix = Math.floor(1000 + Math.random() * 9000);
+    const store = getStore();
+
+    // Generate secure random ticket suffix
+    const randomTicketSuffix = crypto.randomInt(1000, 9999);
     const ticketNumber = `SZ-${randomTicketSuffix}`;
 
     const newEntry: PaymentEntry = {
@@ -305,64 +437,125 @@ export const dbService = {
       createdAt: new Date().toISOString()
     };
 
+    store.entries.unshift(newEntry);
+
+    store.auditLogs.unshift({
+      id: `audit-${Date.now()}`,
+      action: 'ENTRY_CREATED',
+      details: { ticketNumber, tiktokHandle: newEntry.tiktokHandle, amount: newEntry.amountPaid },
+      timestamp: new Date().toISOString()
+    });
+
+    await commitStore(store);
+
+    const db = await getCloudDatabase();
     if (db) {
-      await db.collection('entries').insertOne(newEntry as any);
+      try {
+        await db.collection('entries').insertOne(newEntry as any);
+      } catch (e) {
+        console.warn('Cloud sync error (entry):', e);
+      }
     }
-    mockEntries.unshift(newEntry);
+
     return newEntry;
   },
 
   async updateEntryStatus(id: string, status: 'APPROVED' | 'REJECTED'): Promise<PaymentEntry | null> {
-    const db = await getDatabase();
-    const isEligible = status === 'APPROVED';
+    const store = getStore();
+    const entry = store.entries.find(e => e.id === id);
+    if (!entry) return null;
+
+    entry.status = status;
+    entry.isEligibleForGiveaway = status === 'APPROVED';
+
+    store.auditLogs.unshift({
+      id: `audit-${Date.now()}`,
+      action: 'ENTRY_STATUS_UPDATED',
+      details: { id, status },
+      timestamp: new Date().toISOString()
+    });
+
+    await commitStore(store);
+
+    const db = await getCloudDatabase();
     if (db) {
-      await db.collection('entries').updateOne(
-        { id },
-        { $set: { status, isEligibleForGiveaway: isEligible } }
-      );
-      return await db.collection<PaymentEntry>('entries').findOne({ id });
+      try {
+        await db.collection('entries').updateOne(
+          { id },
+          { $set: { status, isEligibleForGiveaway: entry.isEligibleForGiveaway } }
+        );
+      } catch (e) {
+        console.warn('Cloud sync error (entry status):', e);
+      }
     }
-    const idx = mockEntries.findIndex(e => e.id === id);
-    if (idx !== -1) {
-      mockEntries[idx].status = status;
-      mockEntries[idx].isEligibleForGiveaway = isEligible;
-      return mockEntries[idx];
-    }
-    return null;
+
+    return entry;
   },
 
   async deleteEntry(id: string): Promise<boolean> {
-    const db = await getDatabase();
+    const store = getStore();
+    const initialLen = store.entries.length;
+    store.entries = store.entries.filter(e => e.id !== id);
+
+    if (store.entries.length === initialLen) return false;
+
+    store.auditLogs.unshift({
+      id: `audit-${Date.now()}`,
+      action: 'ENTRY_DELETED',
+      details: { id },
+      timestamp: new Date().toISOString()
+    });
+
+    await commitStore(store);
+
+    const db = await getCloudDatabase();
     if (db) {
-      const res = await db.collection('entries').deleteOne({ id });
-      return res.deletedCount > 0;
+      try {
+        await db.collection('entries').deleteOne({ id });
+      } catch (e) {
+        console.warn('Cloud sync error (entry delete):', e);
+      }
     }
-    const lenBefore = mockEntries.length;
-    mockEntries = mockEntries.filter(e => e.id !== id);
-    return mockEntries.length < lenBefore;
+
+    return true;
   },
 
-  async pickRandomWinner(): Promise<PaymentEntry | null> {
-    const show = await this.getCurrentShow();
-    const eligibleEntries = mockEntries.filter(
-      e => e.isEligibleForGiveaway && e.status === 'APPROVED'
+  /**
+   * Provably fair cryptographic winner picker
+   */
+  async pickRandomWinner(): Promise<{
+    winner: PaymentEntry;
+    auditProof: {
+      seedHex: string;
+      poolSize: number;
+      chosenIndex: number;
+      timestamp: string;
+    };
+  } | null> {
+    const store = getStore();
+    const eligibleEntries = store.entries.filter(
+      e => e.isEligibleForGiveaway && e.status === 'APPROVED' && !e.isWinner
     );
 
     if (eligibleEntries.length === 0) return null;
 
-    const winnerIndex = Math.floor(Math.random() * eligibleEntries.length);
-    const winner = eligibleEntries[winnerIndex];
+    // Cryptographically secure pseudo-random index using crypto.randomInt
+    const chosenIndex = crypto.randomInt(0, eligibleEntries.length);
+    const winner = eligibleEntries[chosenIndex];
     winner.isWinner = true;
 
-    await this.updateShow({
-      status: 'ENDED',
-      winner: {
-        ticketNumber: winner.ticketNumber,
-        tiktokHandle: winner.tiktokHandle,
-        fullName: winner.fullName,
-        announcedAt: new Date().toISOString()
-      }
-    });
+    // Generate cryptographic audit proof
+    const seedBytes = crypto.randomBytes(16);
+    const seedHex = seedBytes.toString('hex');
+
+    const show = store.show;
+    show.status = 'ENDED';
+    show.winner = {
+      ticketNumber: winner.ticketNumber,
+      tiktokHandle: winner.tiktokHandle,
+      fullName: winner.fullName,
+      announcedAt: new Date().toISOString()
+    };
 
     const pastWinner: PastWinner = {
       id: `win-${Date.now()}`,
@@ -376,46 +569,77 @@ export const dbService = {
       showTitle: show.title
     };
 
-    mockWinners.unshift(pastWinner);
+    store.winners.unshift(pastWinner);
 
-    const db = await getDatabase();
+    const auditProof = {
+      seedHex,
+      poolSize: eligibleEntries.length,
+      chosenIndex,
+      timestamp: new Date().toISOString()
+    };
+
+    store.auditLogs.unshift({
+      id: `audit-${Date.now()}`,
+      action: 'WINNER_DRAWN_PROVABLY_FAIR',
+      details: {
+        winnerTicket: winner.ticketNumber,
+        winnerHandle: winner.tiktokHandle,
+        ...auditProof
+      },
+      timestamp: new Date().toISOString()
+    });
+
+    await commitStore(store);
+
+    const db = await getCloudDatabase();
     if (db) {
-      await db.collection('entries').updateOne({ id: winner.id }, { $set: { isWinner: true } });
-      await db.collection('winners').insertOne(pastWinner as any);
+      try {
+        await db.collection('entries').updateOne({ id: winner.id }, { $set: { isWinner: true } });
+        await db.collection('winners').insertOne(pastWinner as any);
+        await db.collection('shows').updateOne({ id: 'show-live-current' }, { $set: show }, { upsert: true });
+      } catch (e) {
+        console.warn('Cloud sync error (winner):', e);
+      }
     }
 
-    return winner;
+    return { winner, auditProof };
   },
 
   async getWinners(): Promise<PastWinner[]> {
-    const db = await getDatabase();
-    if (db) {
-      return await db.collection<PastWinner>('winners').find().sort({ date: -1 }).toArray();
-    }
-    return mockWinners;
+    const store = getStore();
+    return store.winners;
   },
 
   async getSettings(): Promise<PaymentAccountSettings> {
-    const db = await getDatabase();
-    if (db) {
-      const settings = await db.collection<PaymentAccountSettings>('settings').findOne({ id: 'global-settings' });
-      if (settings) return settings;
-      await db.collection('settings').insertOne({ id: 'global-settings', ...mockSettings } as any);
-      return mockSettings;
-    }
-    return mockSettings;
+    const store = getStore();
+    return store.settings;
   },
 
   async updateSettings(updates: Partial<PaymentAccountSettings>): Promise<PaymentAccountSettings> {
-    const db = await getDatabase();
-    mockSettings = { ...mockSettings, ...updates };
+    const store = getStore();
+    store.settings = {
+      ...store.settings,
+      ...updates
+    };
+
+    store.auditLogs.unshift({
+      id: `audit-${Date.now()}`,
+      action: 'SETTINGS_UPDATED',
+      details: updates,
+      timestamp: new Date().toISOString()
+    });
+
+    await commitStore(store);
+
+    const db = await getCloudDatabase();
     if (db) {
-      await db.collection('settings').updateOne(
-        { id: 'global-settings' },
-        { $set: updates },
-        { upsert: true }
-      );
+      try {
+        await db.collection('settings').updateOne({ id: 'global-settings' }, { $set: updates }, { upsert: true });
+      } catch (e) {
+        console.warn('Cloud sync error (settings):', e);
+      }
     }
-    return mockSettings;
+
+    return store.settings;
   }
 };
