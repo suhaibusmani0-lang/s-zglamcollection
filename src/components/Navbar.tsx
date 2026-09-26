@@ -82,6 +82,13 @@ export default function Navbar({ status, remainingSeconds, totalEntrants }: Navb
             Live Entrants ({totalEntrants})
           </Link>
           <Link
+            href="/live"
+            className="text-sm font-bold text-amber-800 hover:text-amber-950 transition-colors flex items-center gap-1"
+          >
+            <Sparkles className="w-3.5 h-3.5 text-amber-600" />
+            <span>Live Portal (/live)</span>
+          </Link>
+          <Link
             href="#winners"
             className="text-sm font-medium text-stone-700 hover:text-amber-700 transition-colors"
           >
@@ -104,7 +111,7 @@ export default function Navbar({ status, remainingSeconds, totalEntrants }: Navb
           ) : null}
 
           <a
-            href="https://www.tiktok.com/@szglamcollection/live"
+            href="https://www.tiktok.com/@snzglam/live"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 text-stone-950 font-bold text-xs tracking-wider uppercase shadow-[0_2px_10px_rgba(212,175,55,0.35)] hover:shadow-[0_4px_15px_rgba(212,175,55,0.5)] hover:scale-105 transition-all"

@@ -1,12 +1,12 @@
 {
   "version": 1,
-  "lastUpdated": "2026-09-26T19:02:03.368Z",
+  "lastUpdated": "2026-09-26T19:21:23.924Z",
   "show": {
     "id": "show-live-current",
     "title": "Friday Luxury Kundan & Bridal Drop #42",
-    "status": "ENDED",
+    "status": "OFFLINE",
     "tiktokLiveUrl": "https://www.tiktok.com/@snzglam/live",
-    "timerEndTime": "2026-09-26T19:23:39.645Z",
+    "timerEndTime": null,
     "timerDurationMinutes": 30,
     "featuredPrize": {
       "title": "24K Gold Plated Royal Kundan & Basra Pearl Bridal Choker Set",
@@ -21,7 +21,9 @@
       "tiktokHandle": "@amrit_dhillon",
       "fullName": "Amrit Dhillon",
       "announcedAt": "2026-09-26T19:02:03.208Z"
-    }
+    },
+    "action": "END_SHOW",
+    "durationMinutes": 30
   },
   "entries": [
     {
@@ -214,6 +216,32 @@
     "supportEmail": "orders@szglamcollection.com"
   },
   "auditLogs": [
+    {
+      "id": "audit-1790450483924",
+      "action": "SHOW_UPDATED",
+      "details": {
+        "action": "END_SHOW"
+      },
+      "timestamp": "2026-09-26T19:21:23.924Z"
+    },
+    {
+      "id": "audit-1790450483218",
+      "action": "SHOW_UPDATED",
+      "details": {
+        "action": "START_PAYMENT_WINDOW",
+        "durationMinutes": 30
+      },
+      "timestamp": "2026-09-26T19:21:23.218Z"
+    },
+    {
+      "id": "audit-1790450059694",
+      "action": "SHOW_UPDATED",
+      "details": {
+        "timerEndTime": null,
+        "status": "OFFLINE"
+      },
+      "timestamp": "2026-09-26T19:14:19.694Z"
+    },
     {
       "id": "audit-1790449323368",
       "action": "WINNER_DRAWN_PROVABLY_FAIR",

@@ -3,8 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { ShieldCheck, Truck } from 'lucide-react';
-import { InstagramIcon, TikTokIcon, WhatsAppIcon, PhoneCallIcon } from '@/components/SocialIcons';
+import { ShieldCheck, Truck, Heart } from 'lucide-react';
 
 export default function Footer() {
   return (
@@ -23,17 +22,17 @@ export default function Footer() {
                 />
               </div>
               <div>
-                <span className="font-heading text-xl font-bold tracking-wider gold-gradient-text block uppercase">
+                <span className="font-serif text-xl font-bold tracking-wider gold-gradient-text block">
                   S&amp;Z GLAM COLLECTION
                 </span>
-                <span className="text-[10px] uppercase tracking-widest text-stone-500 font-semibold font-heading">
-                  Curated by Sumera Usmani • USA
+                <span className="text-[10px] uppercase tracking-widest text-stone-500 font-semibold">
+                  Jewelry That Celebrates You • USA
                 </span>
               </div>
             </div>
 
             <p className="text-stone-600 text-xs max-w-md leading-relaxed font-normal">
-              Premier US boutique curated by Sumera Usmani for handcrafted South Asian bridal jewelry, royal kundan choker sets, uncut polki, and high-shine American Diamond pieces. Join our daily TikTok live drops and customer giveaways!
+              Premier US boutique for handcrafted South Asian bridal jewelry, royal kundan choker sets, uncut polki, and high-shine American Diamond pieces. Join our daily TikTok live drops and customer giveaways!
             </p>
 
             <div className="flex items-center gap-4 text-stone-700 pt-2 font-medium">
@@ -50,7 +49,7 @@ export default function Footer() {
 
           {/* Col 2: Quick Links */}
           <div className="space-y-3">
-            <h4 className="text-stone-900 font-bold text-sm uppercase tracking-wider font-heading">
+            <h4 className="text-stone-900 font-bold text-sm uppercase tracking-wider">
               Live Show &amp; Giveaways
             </h4>
             <ul className="space-y-2 text-xs font-medium">
@@ -60,83 +59,45 @@ export default function Footer() {
                 </a>
               </li>
               <li>
-                <a href="#payment-portal" className="hover:text-amber-800 transition-colors">
+                <a href="#payment" className="hover:text-amber-800 transition-colors">
                   Official US Payment Methods
                 </a>
               </li>
               <li>
-                <Link href="/shop" className="hover:text-amber-800 transition-colors">
-                  Dedicated VIP Shop Portal
-                </Link>
+                <a href="#register" className="hover:text-amber-800 transition-colors">
+                  Submit 30-Min Payment Proof
+                </a>
               </li>
               <li>
-                <a href="#hall-of-fame" className="hover:text-amber-800 transition-colors">
+                <a href="#entrants" className="hover:text-amber-800 transition-colors">
+                  Tonight&apos;s Live Qualified List
+                </a>
+              </li>
+              <li>
+                <a href="#winners" className="hover:text-amber-800 transition-colors">
                   Past Lucky Winners
                 </a>
               </li>
             </ul>
           </div>
 
-          {/* Col 3: Customer Care & Social Media Icons */}
+          {/* Col 3: Customer Care & TikTok */}
           <div className="space-y-3">
-            <h4 className="text-stone-900 font-bold text-sm uppercase tracking-wider font-heading">
-              Connect &amp; Concierge
+            <h4 className="text-stone-900 font-bold text-sm uppercase tracking-wider">
+              Host &amp; Support
             </h4>
             <p className="text-xs text-stone-600 leading-relaxed font-normal">
-              Direct consultation with Sumera Usmani for custom bridal jewelry &amp; order inquiries:
+              Have questions about your bill or shipping? Reach out to the host directly:
             </p>
-
-            {/* Sleek Social Media Icons */}
-            <div className="flex items-center gap-2.5 pt-2">
-              {/* Instagram */}
-              <a
-                href="https://www.instagram.com/snzglam/"
-                target="_blank"
-                rel="noreferrer"
-                aria-label="Instagram @snzglam"
-                className="w-10 h-10 rounded-full bg-white hover:bg-gradient-to-tr hover:from-amber-600 hover:to-pink-600 text-stone-700 hover:text-white flex items-center justify-center transition-all duration-300 border border-stone-300 hover:border-amber-400 shadow-sm hover:scale-110"
-              >
-                <InstagramIcon className="w-4 h-4" />
-              </a>
-
-              {/* TikTok */}
-              <a
-                href="https://www.tiktok.com/@snzglam"
-                target="_blank"
-                rel="noreferrer"
-                aria-label="TikTok @snzglam"
-                className="w-10 h-10 rounded-full bg-white hover:bg-black text-stone-700 hover:text-white flex items-center justify-center transition-all duration-300 border border-stone-300 hover:border-stone-900 shadow-sm hover:scale-110"
-              >
-                <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
-                  <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.31 0 .61.05.89.14V8.98a6.34 6.34 0 0 0-.89-.06 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34-6.34V8.71a8.21 8.21 0 0 0 4.76 1.49V6.75a4.87 4.87 0 0 1-1-.06z" />
-                </svg>
-              </a>
-
-              {/* WhatsApp */}
-              <a
-                href="https://wa.me/19296001937"
-                target="_blank"
-                rel="noreferrer"
-                aria-label="WhatsApp Concierge"
-                className="w-10 h-10 rounded-full bg-white hover:bg-emerald-600 text-stone-700 hover:text-white flex items-center justify-center transition-all duration-300 border border-stone-300 hover:border-emerald-500 shadow-sm hover:scale-110"
-              >
-                <WhatsAppIcon className="w-4 h-4" />
-              </a>
-
-              {/* Direct Phone */}
-              <a
-                href="tel:19296001937"
-                aria-label="Direct Phone Line"
-                className="w-10 h-10 rounded-full bg-white hover:bg-amber-600 text-stone-700 hover:text-white flex items-center justify-center transition-all duration-300 border border-stone-300 hover:border-amber-500 shadow-sm hover:scale-110"
-              >
-                <PhoneCallIcon className="w-3.5 h-3.5" />
-              </a>
+            <div className="space-y-1.5 text-xs font-medium">
+              <p className="text-stone-900 font-semibold">Instagram: <a href="https://www.instagram.com/snzglam/" target="_blank" rel="noreferrer" className="text-amber-800 underline">@snzglam</a></p>
+              <p className="text-stone-700">WhatsApp: <a href="https://wa.me/19296001937" target="_blank" rel="noreferrer" className="text-amber-800 underline">+1 (929) 600-1937</a></p>
+              <p className="text-stone-700">Email: orders@szglamcollection.com</p>
             </div>
-
-            <div className="pt-3">
+            <div className="pt-2">
               <Link
                 href="/admin"
-                className="inline-block px-3 py-1.5 rounded-lg bg-white border border-stone-300 text-stone-700 hover:text-amber-800 text-[11px] font-semibold shadow-sm font-heading"
+                className="inline-block px-3 py-1.5 rounded-lg bg-white border border-stone-300 text-stone-700 hover:text-amber-800 text-[11px] font-semibold shadow-sm"
               >
                 Host Control Room (Admin)
               </Link>
