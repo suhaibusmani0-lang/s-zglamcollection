@@ -1,14 +1,14 @@
 @import "tailwindcss";
 
 :root {
-  --background: #fcfbf9;
+  --background: #fbf9f5;
   --foreground: #1c1816;
   --gold-primary: #c5a059;
   --gold-dark: #98752c;
   --gold-light: #fbf5e8;
   --gold-border: #e8d9ba;
-  --font-royal: 'Cinzel', 'Playfair Display', Georgia, serif;
-  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-royal: 'Cinzel', serif;
+  --font-editorial: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
   --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
@@ -18,33 +18,126 @@ body {
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-image: 
+    radial-gradient(rgba(212, 175, 55, 0.04) 1px, transparent 1px),
+    radial-gradient(rgba(180, 140, 60, 0.03) 1px, #fbf9f5 1px);
+  background-size: 40px 40px, 80px 80px;
+  background-position: 0 0, 20px 20px;
 }
 
-/* Royal Brand Headings */
+/* Luxury Editorial Headings */
 .font-royal {
-  font-family: 'Cinzel', 'Playfair Display', Georgia, serif;
-  letter-spacing: 0.04em;
+  font-family: 'Cinzel', serif;
+  letter-spacing: 0.08em;
 }
 
 .font-editorial {
-  font-family: 'Playfair Display', Georgia, serif;
+  font-family: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+}
+
+/* Gold Metallic Text Gradient */
+.gold-text-gradient {
+  background: linear-gradient(135deg, #996515 0%, #c5a059 30%, #e6ca65 50%, #b8860b 75%, #8a5a12 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.gold-gradient-bg {
+  background: linear-gradient(135deg, #d4af37 0%, #b8860b 50%, #996515 100%);
+}
+
+.champagne-gradient-bg {
+  background: linear-gradient(135deg, #fffcf5 0%, #fdf5e6 50%, #f7ecd5 100%);
+}
+
+/* Keyframes for Luxury Micro-interactions */
+@keyframes shimmerSweep {
+  0% { transform: translateX(-100%); opacity: 0; }
+  50% { opacity: 0.6; }
+  100% { transform: translateX(200%); opacity: 0; }
+}
+
+@keyframes gentleFloat {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-7px); }
+}
+
+@keyframes pulseGold {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.45); }
+  50% { box-shadow: 0 0 0 10px rgba(212, 175, 55, 0); }
+}
+
+@keyframes pulseEmerald {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.5); }
+  50% { box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); }
+}
+
+@keyframes marqueeInfinite {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marqueeInfinite 32s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+.animate-gentle-float {
+  animation: gentleFloat 5s ease-in-out infinite;
+}
+
+.pulse-gold {
+  animation: pulseGold 2.5s infinite;
+}
+
+.pulse-emerald {
+  animation: pulseEmerald 2s infinite;
+}
+
+/* Shimmer Overlay on hover for Luxury Cards */
+.shimmer-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.shimmer-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.65), transparent);
+  transform: translateX(-100%);
+  pointer-events: none;
+}
+
+.shimmer-card:hover::after {
+  animation: shimmerSweep 1.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Bespoke Gold Buttons */
 .btn-royal-gold {
-  background: linear-gradient(135deg, #d4af37 0%, #aa8222 100%);
+  background: linear-gradient(135deg, #d4af37 0%, #b8860b 50%, #946e16 100%);
   color: #ffffff;
   font-weight: 700;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 4px 18px rgba(184, 144, 71, 0.28);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 6px 20px rgba(184, 144, 71, 0.25);
+  position: relative;
+  overflow: hidden;
 }
 
 .btn-royal-gold:hover {
-  background: linear-gradient(135deg, #c5a028 0%, #946e16 100%);
-  transform: translateY(-1.5px);
-  box-shadow: 0 8px 24px rgba(184, 144, 71, 0.38);
+  background: linear-gradient(135deg, #e0be47 0%, #c4941d 50%, #9e7518 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(184, 144, 71, 0.38);
 }
 
 .btn-royal-outline {
@@ -52,7 +145,7 @@ body {
   color: #8c671b;
   border: 1.5px solid #d4af37;
   font-weight: 700;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -60,23 +153,30 @@ body {
 .btn-royal-outline:hover {
   background: #fbf7ee;
   color: #694b0d;
-  border-color: #aa8222;
-  transform: translateY(-1.5px);
-  box-shadow: 0 6px 18px rgba(212, 175, 55, 0.18);
+  border-color: #996515;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(212, 175, 55, 0.16);
 }
 
-/* Bespoke Luxury Card */
+/* Bespoke Luxury Cards */
 .royal-card {
   background: #ffffff;
   border: 1px solid rgba(220, 198, 154, 0.55);
-  box-shadow: 0 10px 35px rgba(60, 42, 15, 0.04);
+  box-shadow: 0 12px 35px -8px rgba(90, 65, 25, 0.05);
   border-radius: 1.5rem;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.royal-card:hover {
+  border-color: rgba(197, 160, 89, 0.85);
+  box-shadow: 0 20px 45px -10px rgba(197, 160, 89, 0.16);
+  transform: translateY(-3px);
 }
 
 .royal-card-highlight {
   background: #ffffff;
-  border: 1.5px solid rgba(212, 175, 55, 0.6);
-  box-shadow: 0 12px 40px rgba(212, 175, 55, 0.12);
+  border: 1.5px solid rgba(212, 175, 55, 0.7);
+  box-shadow: 0 14px 45px -10px rgba(212, 175, 55, 0.15);
   border-radius: 1.5rem;
 }
 
@@ -88,7 +188,7 @@ body {
   background: #fcfbf9;
 }
 ::-webkit-scrollbar-thumb {
-  background: #e0d2b8;
+  background: #decbb0;
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {

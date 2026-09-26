@@ -14,18 +14,21 @@ export async function POST(req: Request) {
   try {
     const body = await req.json();
 
-    const {
-      tiktokHandle,
-      fullName,
-      phone,
-      email,
-      amountPaid,
-      paymentMethod,
-      transactionReference,
-      receiptUrl,
-      shippingAddress,
-      notes
-    } = body;
+    const tiktokHandle = body.tiktokHandle;
+    const fullName = body.fullName;
+    const phone = body.phone || body.phoneNumber || '';
+    const email = body.email || '';
+    const amountPaid = body.amountPaid;
+    const paymentMethod = body.paymentMethod;
+    const transactionReference = body.transactionReference || '';
+    const receiptUrl = body.receiptUrl || body.receiptImageUrl || body.receiptImage || '';
+    const shippingAddress = body.shippingAddress || {
+      street: body.streetAddress || '',
+      city: body.city || '',
+      state: body.state || '',
+      zip: body.zipCode || body.zip || ''
+    };
+    const notes = body.notes || '';
 
     if (!tiktokHandle || !fullName || !phone || !amountPaid || !paymentMethod) {
       return NextResponse.json(
@@ -41,18 +44,18 @@ export async function POST(req: Request) {
       tiktokHandle: tiktokHandle.trim().startsWith('@') ? tiktokHandle.trim() : `@${tiktokHandle.trim()}`,
       fullName: fullName.trim(),
       phone: phone.trim(),
-      email: (email || '').trim(),
+      email: email.trim(),
       amountPaid: parseFloat(amountPaid) || 0,
       paymentMethod,
-      transactionReference: (transactionReference || '').trim(),
-      receiptUrl: receiptUrl || '',
-      shippingAddress: shippingAddress || {
-        street: '',
-        city: '',
-        state: '',
-        zip: ''
+      transactionReference: transactionReference.trim(),
+      receiptUrl: receiptUrl,
+      shippingAddress: {
+        street: shippingAddress.street || '',
+        city: shippingAddress.city || '',
+        state: shippingAddress.state || '',
+        zip: shippingAddress.zip || shippingAddress.zipCode || ''
       },
-      notes: notes || ''
+      notes: notes
     });
 
     return NextResponse.json({
