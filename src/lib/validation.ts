@@ -18,7 +18,6 @@ export function normalizeTikTokHandle(handle: unknown): string {
 
 export function normalizePhoneNumber(phone: unknown): string {
   const str = sanitizeString(phone);
-  // Keep only digits and common formatting symbols
   return str.replace(/[^\d+()\-\s]/g, '').slice(0, 30);
 }
 

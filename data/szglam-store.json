@@ -1,12 +1,12 @@
 {
   "version": 1,
-  "lastUpdated": "2026-09-26T18:43:50.268Z",
+  "lastUpdated": "2026-09-26T19:02:03.368Z",
   "show": {
     "id": "show-live-current",
     "title": "Friday Luxury Kundan & Bridal Drop #42",
-    "status": "PAYMENT_WINDOW",
+    "status": "ENDED",
     "tiktokLiveUrl": "https://www.tiktok.com/@snzglam/live",
-    "timerEndTime": "2026-09-26T19:08:39.645Z",
+    "timerEndTime": "2026-09-26T19:23:39.645Z",
     "timerDurationMinutes": 30,
     "featuredPrize": {
       "title": "24K Gold Plated Royal Kundan & Basra Pearl Bridal Choker Set",
@@ -16,7 +16,12 @@
     },
     "startedAt": "2026-09-26T18:05:39.645Z",
     "endedAt": null,
-    "winner": null
+    "winner": {
+      "ticketNumber": "SZ-9042",
+      "tiktokHandle": "@amrit_dhillon",
+      "fullName": "Amrit Dhillon",
+      "announcedAt": "2026-09-26T19:02:03.208Z"
+    }
   },
   "entries": [
     {
@@ -88,7 +93,7 @@
       },
       "status": "APPROVED",
       "isEligibleForGiveaway": true,
-      "isWinner": false,
+      "isWinner": true,
       "createdAt": "2026-09-26T18:29:39.645Z"
     },
     {
@@ -140,6 +145,17 @@
     }
   ],
   "winners": [
+    {
+      "id": "win-1790449323208",
+      "ticketNumber": "SZ-9042",
+      "tiktokHandle": "@amrit_dhillon",
+      "fullName": "Amrit Dhillon",
+      "prizeTitle": "24K Gold Plated Royal Kundan & Basra Pearl Bridal Choker Set",
+      "prizeValue": 245,
+      "prizeImageUrl": "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?q=80&w=1200&auto=format&fit=crop",
+      "date": "Sep 27, 2026",
+      "showTitle": "Friday Luxury Kundan & Bridal Drop #42"
+    },
     {
       "id": "win-1",
       "ticketNumber": "SZ-8921",
@@ -198,6 +214,46 @@
     "supportEmail": "orders@szglamcollection.com"
   },
   "auditLogs": [
+    {
+      "id": "audit-1790449323368",
+      "action": "WINNER_DRAWN_PROVABLY_FAIR",
+      "details": {
+        "winnerTicket": "SZ-9042",
+        "winnerHandle": "@amrit_dhillon",
+        "seedHex": "b620a6e2fdec49a231a1d00e339d844d",
+        "poolSize": 5,
+        "chosenIndex": 2,
+        "timestamp": "2026-09-26T19:02:03.368Z"
+      },
+      "timestamp": "2026-09-26T19:02:03.368Z"
+    },
+    {
+      "id": "audit-1790449320490",
+      "action": "SHOW_UPDATED",
+      "details": {
+        "status": "PAYMENT_WINDOW",
+        "timerEndTime": "2026-09-26T19:23:39.645Z"
+      },
+      "timestamp": "2026-09-26T19:02:00.491Z"
+    },
+    {
+      "id": "audit-1790449320226",
+      "action": "SHOW_UPDATED",
+      "details": {
+        "status": "PAYMENT_WINDOW",
+        "timerEndTime": "2026-09-26T19:18:39.645Z"
+      },
+      "timestamp": "2026-09-26T19:02:00.226Z"
+    },
+    {
+      "id": "audit-1790449318814",
+      "action": "SHOW_UPDATED",
+      "details": {
+        "status": "PAYMENT_WINDOW",
+        "timerEndTime": "2026-09-26T19:13:39.645Z"
+      },
+      "timestamp": "2026-09-26T19:01:58.814Z"
+    },
     {
       "id": "audit-1790448230268",
       "action": "ENTRY_CREATED",

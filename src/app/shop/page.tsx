@@ -21,6 +21,7 @@ import {
   Phone,
   CheckCircle2
 } from 'lucide-react';
+import { InstagramIcon, TikTokIcon, WhatsAppIcon, PhoneCallIcon } from '@/components/SocialIcons';
 import { LiveShow, PaymentAccountSettings, PastWinner } from '@/lib/types';
 import ConfettiCelebration from '@/components/ConfettiCelebration';
 
@@ -747,33 +748,47 @@ export default function ShopGiveawayPage() {
         </div>
 
         {/* Social Links on Shop Page */}
-        <div className="flex items-center justify-center gap-4 text-stone-500 text-xs pt-4 pb-8 border-t border-stone-200">
-          <a
-            href="https://www.tiktok.com/@snzglam/live"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="w-9 h-9 rounded-full bg-stone-100 hover:bg-amber-100 text-stone-700 hover:text-amber-900 flex items-center justify-center transition-colors font-bold text-xs"
-            title="TikTok"
-          >
-            TT
-          </a>
+        <div className="flex items-center justify-center gap-3 text-stone-500 text-xs pt-6 pb-8 border-t border-stone-200">
+          {/* Instagram */}
           <a
             href="https://www.instagram.com/snzglam/"
             target="_blank"
             rel="noopener noreferrer"
-            className="w-9 h-9 rounded-full bg-stone-100 hover:bg-amber-100 text-stone-700 hover:text-amber-900 flex items-center justify-center transition-colors font-bold text-xs"
-            title="Instagram"
+            aria-label="Instagram @snzglam"
+            className="w-10 h-10 rounded-full bg-stone-100 hover:bg-gradient-to-tr hover:from-amber-600 hover:to-pink-600 text-stone-700 hover:text-white flex items-center justify-center transition-all duration-300 border border-stone-300 hover:border-amber-400 shadow-sm hover:scale-110"
           >
-            IG
+            <InstagramIcon className="w-4 h-4" />
           </a>
+
+          {/* TikTok */}
+          <a
+            href="https://www.tiktok.com/@snzglam"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="TikTok @snzglam"
+            className="w-10 h-10 rounded-full bg-stone-100 hover:bg-black text-stone-700 hover:text-white flex items-center justify-center transition-all duration-300 border border-stone-300 hover:border-stone-900 shadow-sm hover:scale-110"
+          >
+            <TikTokIcon className="w-4 h-4" />
+          </a>
+
+          {/* WhatsApp */}
           <a
             href="https://wa.me/19296001937"
             target="_blank"
             rel="noopener noreferrer"
-            className="w-9 h-9 rounded-full bg-stone-100 hover:bg-emerald-100 text-stone-700 hover:text-emerald-900 flex items-center justify-center transition-colors font-bold text-xs"
-            title="WhatsApp"
+            aria-label="WhatsApp Concierge"
+            className="w-10 h-10 rounded-full bg-stone-100 hover:bg-emerald-600 text-stone-700 hover:text-white flex items-center justify-center transition-all duration-300 border border-stone-300 hover:border-emerald-500 shadow-sm hover:scale-110"
           >
-            WA
+            <WhatsAppIcon className="w-4 h-4" />
+          </a>
+
+          {/* Direct Phone */}
+          <a
+            href="tel:19296001937"
+            aria-label="Direct Phone Line"
+            className="w-10 h-10 rounded-full bg-stone-100 hover:bg-amber-600 text-stone-700 hover:text-white flex items-center justify-center transition-all duration-300 border border-stone-300 hover:border-amber-500 shadow-sm hover:scale-110"
+          >
+            <PhoneCallIcon className="w-3.5 h-3.5" />
           </a>
         </div>
       </main>
@@ -781,7 +796,7 @@ export default function ShopGiveawayPage() {
       {/* Footer with Zarnetic Credit */}
       <footer className="border-t border-[#ebd9b5] bg-[#1a1715] text-[#d6cdbe] py-10 px-4 text-center text-xs">
         <p className="mb-2">
-          Questions? Message S&amp;Z GLAM on{' '}
+          Questions? Message Sumera Usmani &amp; Concierge on{' '}
           <a
             href="https://wa.me/19296001937"
             target="_blank"
@@ -802,7 +817,7 @@ export default function ShopGiveawayPage() {
         </p>
 
         <div className="pt-4 border-t border-stone-800 flex flex-col sm:flex-row items-center justify-between max-w-4xl mx-auto gap-2 text-stone-500">
-          <p>&copy; {new Date().getFullYear()} S&amp;Z GLAM COLLECTION. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} S&amp;Z GLAM COLLECTION LLC • Curated by Sumera Usmani. All rights reserved.</p>
 
           <p className="text-stone-400 font-medium">
             Developed by{' '}
