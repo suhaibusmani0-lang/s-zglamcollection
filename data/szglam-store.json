@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "lastUpdated": "2026-09-26T19:21:23.924Z",
+  "lastUpdated": "2026-09-26T19:26:20.485Z",
   "show": {
     "id": "show-live-current",
     "title": "Friday Luxury Kundan & Bridal Drop #42",
@@ -216,6 +216,25 @@
     "supportEmail": "orders@szglamcollection.com"
   },
   "auditLogs": [
+    {
+      "id": "audit-1790450780485",
+      "action": "SHOW_UPDATED",
+      "details": {
+        "timerEndTime": null,
+        "status": "OFFLINE"
+      },
+      "timestamp": "2026-09-26T19:26:20.485Z"
+    },
+    {
+      "id": "audit-1790450666848",
+      "action": "SHOW_UPDATED",
+      "details": {
+        "status": "PAYMENT_WINDOW",
+        "timerEndTime": "2026-09-26T19:54:26.847Z",
+        "timerDurationMinutes": 30
+      },
+      "timestamp": "2026-09-26T19:24:26.848Z"
+    },
     {
       "id": "audit-1790450483924",
       "action": "SHOW_UPDATED",

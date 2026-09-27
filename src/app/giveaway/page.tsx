@@ -1,3 +1,3 @@
 'use client';
 
-export { default } from '../shop/page';
+export { default } from '../live/page';

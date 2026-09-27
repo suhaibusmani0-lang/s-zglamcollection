@@ -384,52 +384,75 @@ export default function AdminPage() {
   // If Not Authenticated, Show PIN Screen
   if (!isAuthenticated) {
     return (
-      <div className="min-h-screen bg-[#fbf9f5] flex items-center justify-center p-4">
-        <div className="glass-panel-glow rounded-3xl p-8 max-w-sm w-full border-2 border-amber-300 text-center shadow-xl bg-white">
-          <div className="w-14 h-14 rounded-full bg-amber-50 border border-amber-300 text-amber-700 flex items-center justify-center mx-auto mb-4 shadow-sm">
-            <Lock className="w-7 h-7" />
+      <div className="min-h-screen bg-[#faf7f2] flex items-center justify-center p-4 selection:bg-amber-100">
+        <div className="rounded-3xl p-8 sm:p-10 max-w-sm w-full border border-stone-200/80 text-center shadow-xs bg-white space-y-4">
+          <div className="w-12 h-12 rounded-full bg-[#fdf8ed] text-[#b8860b] flex items-center justify-center mx-auto mb-2">
+            <Lock className="w-5 h-5" />
           </div>
-          <h2 className="font-serif text-2xl font-bold text-stone-900 mb-1">Host Live Studio</h2>
-          <p className="text-stone-500 text-xs mb-6 font-medium">Enter your security PIN to access live timer &amp; giveaway controls.</p>
+
+          <div>
+            <h2 className="font-heading text-2xl font-bold text-stone-900">S&amp;Z GLAM Admin</h2>
+            <p className="text-stone-500 text-xs mt-1 font-normal">Sign in to manage the site</p>
+          </div>
 
           {authError && (
-            <div className="p-3 rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs mb-4 font-semibold">
+            <div className="p-3 rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs font-semibold">
               {authError}
             </div>
           )}
 
-          <form onSubmit={handleLogin} className="space-y-4">
-            <input
-              type="password"
-              value={pinInput}
-              onChange={e => setPinInput(e.target.value)}
-              placeholder="Enter PIN (Default: szglam2026)"
-              className="w-full px-4 py-3 rounded-xl bg-stone-50 border border-stone-300 text-stone-900 text-center text-sm focus:outline-none focus:border-amber-500 shadow-sm"
-              autoFocus
-            />
+          <form onSubmit={handleLogin} className="space-y-3 pt-2 text-left">
+            <div>
+              <input
+                type="text"
+                placeholder="Email"
+                defaultValue="admin@szglam.com"
+                className="w-full px-3.5 py-2.5 rounded-xl border border-stone-200 bg-stone-50/50 text-sm focus:border-amber-500 focus:bg-white focus:outline-none"
+              />
+            </div>
+            <div>
+              <input
+                type="password"
+                value={pinInput}
+                onChange={e => setPinInput(e.target.value)}
+                placeholder="Password (Default: szglam2026)"
+                className="w-full px-3.5 py-2.5 rounded-xl border border-stone-200 bg-stone-50/50 text-sm focus:border-amber-500 focus:bg-white focus:outline-none"
+                autoFocus
+              />
+            </div>
             <button
               type="submit"
-              className="w-full py-3 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 text-stone-950 font-bold text-sm uppercase tracking-wider hover:opacity-95 shadow-md"
+              className="w-full py-3 rounded-xl bg-[#d49e24] hover:bg-[#c28e1d] text-white font-bold text-sm tracking-wide shadow-xs transition-colors"
             >
-              Enter Control Room
+              Sign In
             </button>
           </form>
 
-          <div className="mt-6 pt-4 border-t border-stone-200 text-[11px] text-stone-500 font-medium">
-            <Link href="/" className="text-amber-800 hover:underline">
-              &larr; Back to Public Website
-            </Link>
-          </div>
-
-          <div className="mt-4 text-[10px] text-stone-400">
-            <a
-              href="https://www.zarnetic.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-amber-700 hover:text-amber-900 underline font-medium"
-            >
-              Developed by Zarnetic
-            </a>
+          <div className="space-y-1.5 pt-2 text-xs text-stone-400">
+            <div>
+              <button
+                type="button"
+                onClick={() => alert('Default PIN / Password is: szglam2026')}
+                className="hover:text-stone-600 transition-colors"
+              >
+                Forgot password?
+              </button>
+            </div>
+            <div>
+              <Link href="/" className="hover:text-stone-600 transition-colors">
+                Back to home
+              </Link>
+            </div>
+            <div className="pt-2 text-[10px] text-stone-400">
+              <a
+                href="https://www.zarnetic.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:underline"
+              >
+                Developed by Zarnetic
+              </a>
+            </div>
           </div>
         </div>
       </div>
