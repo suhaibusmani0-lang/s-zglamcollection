@@ -5,6 +5,15 @@ import WhatsAppWidget from "@/components/WhatsAppWidget";
 export const metadata: Metadata = {
   title: "S&Z GLAM COLLECTION | Royal South Asian Jewelry & Live Giveaways (USA)",
   description: "Premier US boutique for artisanal 22K-24K gold plated Kundan, uncut Polki, American Diamond bridal sets, and daily TikTok live customer giveaways.",
+  icons: {
+    icon: [
+      { url: '/logo.jpg', type: 'image/jpeg' },
+      { url: '/icon.png', type: 'image/png', sizes: '512x512' },
+      { url: '/favicon.ico', sizes: 'any' }
+    ],
+    shortcut: '/logo.jpg',
+    apple: '/apple-icon.png',
+  },
 };
 
 export default function RootLayout({
@@ -15,6 +24,9 @@ export default function RootLayout({
   return (
     <html lang="en" className="h-full scroll-smooth">
       <head>
+        <link rel="icon" href="/logo.jpg" type="image/jpeg" />
+        <link rel="apple-touch-icon" href="/apple-icon.png" />
+        <link rel="shortcut icon" href="/logo.jpg" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         {/* Google Fonts: Raleway (Headings) and Lato (Body) */}
@@ -23,7 +35,7 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body className="min-h-full flex flex-col bg-[#fcfbf9] text-[#1f1b19]">
+      <body className="min-h-full flex flex-col bg-[#faf7f2] text-[#1f1b19]">
         {children}
         <WhatsAppWidget phoneNumber="19296001937" />
       </body>
