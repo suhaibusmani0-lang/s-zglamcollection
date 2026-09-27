@@ -1,21 +1,25 @@
 {
-  "name": "sz-glam-live",
+  "name": "s-zglamcollection",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
+    "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview"
   },
   "dependencies": {
+    "@opennextjs/cloudflare": "^1.20.6",
     "canvas-confetti": "^1.9.4",
     "cloudinary": "^2.11.0",
     "lucide-react": "^1.48.0",
     "mongodb": "^7.6.0",
     "next": "16.3.6",
     "react": "19.2.8",
-    "react-dom": "19.2.8"
+    "react-dom": "19.2.8",
+    "wrangler": "^4.141.0"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
