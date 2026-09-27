@@ -4,17 +4,17 @@ import React from 'react';
 import { Sparkles, Trophy, CheckCircle, X, Video } from 'lucide-react';
 
 interface ConfettiCelebrationProps {
-  ticketNumber: string;
-  customerName: string;
-  prizeTitle: string;
-  onClose: () => void;
+  ticketNumber?: string;
+  customerName?: string;
+  prizeTitle?: string;
+  onClose?: () => void;
 }
 
 export default function ConfettiCelebration({
-  ticketNumber,
-  customerName,
-  prizeTitle,
-  onClose
+  ticketNumber = '',
+  customerName = '',
+  prizeTitle = '',
+  onClose = () => {}
 }: ConfettiCelebrationProps) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-stone-950/70 backdrop-blur-sm animate-in fade-in duration-300">

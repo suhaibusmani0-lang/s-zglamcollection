@@ -1,4 +1,5 @@
 export type ShowStatus = 'OFFLINE' | 'LIVE_NOW' | 'PAYMENT_WINDOW' | 'ENDED';
+export type PaymentMethod = 'ZELLE' | 'VENMO' | 'CASH_APP' | 'CASHAPP' | 'PAYPAL';
 
 export interface FeaturedPrize {
   title: string;
