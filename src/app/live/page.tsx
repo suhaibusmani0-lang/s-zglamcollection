@@ -179,7 +179,7 @@ export default function LiveGiveawayPage() {
 
         <Link href="/" className="flex items-center gap-2 group">
           <div className="relative w-8 h-8 rounded-full overflow-hidden border border-[#d4af37]/60 shadow-xs">
-            <Image src="/logo.jpg" alt="S&Z GLAM" fill className="object-cover" />
+            <Image src="/logo.png" alt="S&Z GLAM" fill className="object-contain" />
           </div>
           <span className="font-heading font-extrabold text-sm tracking-wider uppercase text-stone-900">
             S&amp;Z GLAM

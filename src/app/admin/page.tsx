@@ -471,7 +471,7 @@ export default function AdminPage() {
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="relative w-10 h-10 rounded-full overflow-hidden border-2 border-amber-400">
-              <Image src="/logo.jpg" alt="Logo" fill className="object-cover" />
+              <Image src="/logo.png" alt="Logo" fill className="object-contain" />
             </div>
             <div>
               <span className="font-serif font-bold text-lg text-stone-900 tracking-wider">

@@ -7,11 +7,11 @@ export const metadata: Metadata = {
   description: "Premier US boutique for artisanal 22K-24K gold plated Kundan, uncut Polki, American Diamond bridal sets, and daily TikTok live customer giveaways.",
   icons: {
     icon: [
-      { url: '/logo.jpg', type: 'image/jpeg' },
       { url: '/icon.png', type: 'image/png', sizes: '512x512' },
+      { url: '/logo.png', type: 'image/png' },
       { url: '/favicon.ico', sizes: 'any' }
     ],
-    shortcut: '/logo.jpg',
+    shortcut: '/icon.png',
     apple: '/apple-icon.png',
   },
 };
@@ -24,9 +24,9 @@ export default function RootLayout({
   return (
     <html lang="en" className="h-full scroll-smooth">
       <head>
-        <link rel="icon" href="/logo.jpg" type="image/jpeg" />
+        <link rel="icon" href="/icon.png" type="image/png" sizes="512x512" />
         <link rel="apple-touch-icon" href="/apple-icon.png" />
-        <link rel="shortcut icon" href="/logo.jpg" />
+        <link rel="shortcut icon" href="/icon.png" type="image/png" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         {/* Google Fonts: Raleway (Headings) and Lato (Body) */}
